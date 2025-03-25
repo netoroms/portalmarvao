@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Marvão - Sua fonte confiável de notícias</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#E53935', // Modern deep red
+                        'brand-secondary': '#FF6D00', // Vibrant orange-red
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Topbar -->
+    <div class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <div class="flex items-center space-x-3 text-gray-600">
+                <i class="far fa-calendar-alt"></i>
+                <span id="current-date" class="text-sm"></span>
+            </div>
+            
+            <div class="flex space-x-4">
+                <a href="#" class="text-red-600 hover:text-red-800 transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-red-500 hover:text-red-700 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-red-600 hover:text-red-800 transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-red-700 hover:text-red-900 transition"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-md py-6">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-brand-primary">Portal <span class="text-brand-secondary">Marvão</span></h1>
+                <p class="text-gray-600">Sua fonte confiável de notícias</p>
+            </div>
+            
+            <div class="hidden md:block">
+                <img src="assets/images/header-ad.jpg" alt="Espaço publicitário" class="max-w-xs rounded-lg shadow-md">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-brand-primary text-white">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="#" class="hover:text-brand-secondary transition"><i class="fas fa-home mr-2"></i>Home</a></li>
+                    <li><a href="#" class="hover:text-brand-secondary transition"><i class="fas fa-landmark mr-2"></i>Política</a></li>
+                    <li><a href="#" class="hover:text-brand-secondary transition"><i class="fas fa-chart-line mr-2"></i>Economia</a></li>
+                    <li><a href="#" class="hover:text-brand-secondary transition"><i class="fas fa-microchip mr-2"></i>Tecnologia</a></li>
+                    <li><a href="#" class="hover:text-brand-secondary transition"><i class="fas fa-futbol mr-2"></i>Esportes</a></li>
+                </ul>
+                
+                <div class="md:hidden">
+                    <button class="mobile-menu-toggle text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                
+                <div class="hidden md:block">
+                    <input type="text" placeholder="Buscar notícias..." 
+                        class="px-3 py-2 rounded-full bg-white/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-brand-secondary">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breaking News -->
+    <div class="bg-gray-100 py-3">
+        <div class="container mx-auto px-4 flex items-center">
+            <div class="bg-brand-primary text-white px-3 py-1 rounded mr-4 flex items-center">
+                <span class="font-bold mr-2">ÚLTIMAS</span>
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="flex-grow overflow-hidden">
+                <div id="newsTicker" class="whitespace-nowrap animate-ticker">
+                    <!-- News ticker content will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Featured Section -->
+            <div class="md:col-span-2">
+                <h2 class="text-2xl font-bold mb-6 border-b-4 border-brand-primary pb-2">Destaques</h2>
+                <div id="featuredPosts" class="grid md:grid-cols-3 gap-6">
+                    <!-- Featured posts will be loaded dynamically -->
+                </div>
+                
+                <!-- Latest News Section -->
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold mb-6 border-b-4 border-brand-primary pb-2">Últimas Notícias</h2>
+                    <div id="latestNews" class="grid md:grid-cols-2 gap-6">
+                        <!-- Latest news will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <aside>
+                <!-- Newsletter -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-brand-primary">Assine nossa newsletter</h3>
+                    <form id="newsletterForm" class="space-y-4">
+                        <input 
+                            type="email" 
+                            placeholder="Seu melhor e-mail" 
+                            required 
+                            class="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-brand-secondary"
+                        >
+                        <button 
+                            type="submit" 
+                            class="w-full bg-brand-secondary text-white py-2 rounded hover:bg-orange-600 transition"
+                        >
+                            Assinar
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Most Read -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-brand-primary">Mais Lidas</h3>
+                    <ul id="mostRead" class="space-y-4">
+                        <!-- Most read posts will be loaded dynamically -->
+                    </ul>
+                </div>
+
+                <!-- Video Highlights -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-brand-primary">Vídeos em Destaque</h3>
+                    <div id="videoHighlights" class="space-y-4">
+                        <!-- Video highlights will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Advertising -->
+                <div class="mb-6">
+                    <img src="assets/images/sidebar-ad.jpg" alt="Publicidade" class="w-full rounded-lg shadow-md">
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Portal Marvão</h3>
+                    <p class="text-gray-300 mb-4">O Portal Marvão é referência em jornalismo digital, trazendo notícias confiáveis.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl text-red-500 hover:text-red-600"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-2xl text-red-500 hover:text-red-600"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl text-red-500 hover:text-red-600"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-red-500 hover:text-red-600"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Links Úteis</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Anuncie Conosco</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Categorias</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">Política</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Economia</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Tecnologia</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">Esportes</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contato</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Rua das Notícias, 123</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span>(11) 1234-5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>contato@portalmarvao.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center text-gray-400 mt-8 pt-6 border-t border-gray-700">
+                <p>&copy; 2024 Portal Marvão. Todos os direitos reservados.</p>
+                <p>Desenvolvido com <i class="fas fa-heart text-red-500"></i> pela equipe Marvão</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Função para carregar posts publicados
+        function loadPublishedPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            return posts.filter(post => post.published)
+                       .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate));
+        }
+
+        // Função para formatar data
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('pt-BR', options);
+        }
+
+        // Função para formatar hora
+        function formatTime(dateString) {
+            const options = { hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleTimeString('pt-BR', options);
+        }
+
+        // Atualiza a data atual
+        function updateCurrentDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const now = new Date();
+            document.getElementById('current-date').textContent = now.toLocaleDateString('pt-BR', options);
+        }
+
+        // Carrega os destaques
+        function loadFeaturedPosts() {
+            const posts = loadPublishedPosts();
+            const featuredContainer = document.getElementById('featuredPosts');
+            
+            if (posts.length > 0) {
+                // Destaque principal (primeiro post)
+                const mainPost = posts[0];
+                featuredContainer.innerHTML = `
+                    <article class="md:col-span-2 bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative h-64">
+                            <img src="${mainPost.image ? 'assets/images/' + mainPost.image : 'assets/images/default-featured.jpg'}" 
+                                 alt="${mainPost.title}" 
+                                 class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold text-white ${getCategoryColor(mainPost.category)}">
+                                ${mainPost.category}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3">
+                                <a href="noticia.html?id=${mainPost.id}" class="hover:text-brand-primary transition">${mainPost.title}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4">${mainPost.content.substring(0, 150)}...</p>
+                            <div class="flex justify-between items-center text-sm text-gray-500">
+                                <span><i class="far fa-clock mr-1"></i> ${formatTime(mainPost.publishDate)}</span>
+                                <a href="noticia.html?id=${mainPost.id}" class="text-brand-primary hover:underline">Ler mais</a>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                
+                // Destaques secundários (próximos 2 posts)
+                const secondaryPosts = posts.slice(1, 3);
+                secondaryPosts.forEach(post => {
+                    featuredContainer.innerHTML += `
+                        <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="relative h-48">
+                                <img src="${post.image ? 'assets/images/' + post.image : 'assets/images/default-featured.jpg'}" 
+                                     alt="${post.title}" 
+                                     class="w-full h-full object-cover">
+                                <span class="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-bold text-white ${getCategoryColor(post.category)}">
+                                    ${post.category}
+                                </span>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold mb-2">
+                                    <a href="noticia.html?id=${post.id}" class="hover:text-brand-primary transition">${post.title}</a>
+                                </h3>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span><i class="far fa-clock mr-1"></i> ${formatTime(post.publishDate)}</span>
+                                    <a href="noticia.html?id=${post.id}" class="text-brand-primary hover:underline">Ler mais</a>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                });
+            } else {
+                featuredContainer.innerHTML = '<p class="text-gray-500">Nenhum destaque disponível no momento.</p>';
+            }
+        }
+
+        // Carrega as últimas notícias
+        function loadLatestNews() {
+            const posts = loadPublishedPosts();
+            const latestContainer = document.getElementById('latestNews');
+            
+            if (posts.length > 0) {
+                const latestPosts = posts.slice(3, 7); // Mostra 4 posts após os destaques
+                latestContainer.innerHTML = latestPosts.map(post => `
+                    <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative h-48">
+                            <img src="${post.image ? 'assets/images/' + post.image : 'assets/images/default-news.jpg'}" 
+                                 alt="${post.title}" 
+                                 class="w-full h-full object-cover">
+                            <span class="absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-bold text-white ${getCategoryColor(post.category)}">
+                                ${post.category}
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold mb-2">
+                                <a href="noticia.html?id=${post.id}" class="hover:text-brand-primary transition">${post.title}</a>
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-3">${post.content.substring(0, 100)}...</p>
+                            <div class="flex justify-between items-center text-xs text-gray-500">
+                                <span><i class="far fa-clock mr-1"></i> ${formatDate(post.publishDate)}</span>
+                                <a href="noticia.html?id=${post.id}" class="text-brand-primary hover:underline">Ler mais</a>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+            } else {
+                latestContainer.innerHTML = '<p class="text-gray-500">Nenhuma notícia recente no momento.</p>';
+            }
+        }
+
+        // Carrega as mais lidas
+        function loadMostRead() {
+            const posts = loadPublishedPosts();
+            const mostReadContainer = document.getElementById('mostRead');
+            
+            if (posts.length > 0) {
+                // Ordena por visualizações (simulado)
+                const mostReadPosts = [...posts].sort(() => 0.5 - Math.random()).slice(0, 5);
+                mostReadContainer.innerHTML = mostReadPosts.map((post, index) => `
+                    <li class="flex items-start">
+                        <span class="text-brand-primary font-bold mr-3">${index + 1}</span>
+                        <a href="noticia.html?id=${post.id}" class="hover:text-brand-primary transition">${post.title}</a>
+                    </li>
+                `).join('');
+            } else {
+                mostReadContainer.innerHTML = '<li class="text-gray-500">Nenhuma notícia popular no momento.</li>';
+            }
+        }
+
+        // Carrega vídeos em destaque
+        function loadVideoHighlights() {
+            const posts = loadPublishedPosts();
+            const videoContainer = document.getElementById('videoHighlights');
+            const videoPosts = posts.filter(post => post.video).slice(0, 2);
+            
+            if (videoPosts.length > 0) {
+                videoContainer.innerHTML = videoPosts.map(post => `
+                    <div class="video-thumbnail relative">
+                        <img src="${post.image ? 'assets/images/' + post.image : 'assets/images/default-video.jpg'}" 
+                             alt="${post.title}" 
+                             class="w-full h-40 object-cover rounded-lg">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="bg-white/80 rounded-full p-3">
+                                <i class="fas fa-play text-brand-primary text-xl"></i>
+                            </div>
+                        </div>
+                        <a href="noticia.html?id=${post.id}" class="block mt-2 font-medium hover:text-brand-primary transition">${post.title}</a>
+                    </div>
+                `).join('');
+            } else {
+                videoContainer.innerHTML = '<p class="text-gray-500">Nenhum vídeo em destaque no momento.</p>';
+            }
+        }
+
+        // Carrega o ticker de notícias
+        function loadNewsTicker() {
+            const posts = loadPublishedPosts();
+            const tickerContainer = document.getElementById('newsTicker');
+            
+            if (posts.length > 0) {
+                const tickerPosts = posts.slice(0, 4);
+                tickerContainer.innerHTML = tickerPosts.map(post => `
+                    <a href="noticia.html?id=${post.id}" class="inline-block mr-8 hover:text-brand-secondary transition">${post.title}</a>
+                `).join(' • ');
+            } else {
+                tickerContainer.innerHTML = '<span class="text-gray-500">Nenhuma notícia recente no momento.</span>';
+            }
+        }
+
+        // Retorna a cor da categoria
+        function getCategoryColor(category) {
+            const colors = {
+                'Política': 'bg-red-500',
+                'Economia': 'bg-blue-500',
+                'Tecnologia': 'bg-purple-500',
+                'Esportes': 'bg-green-500',
+                'Saúde': 'bg-pink-500'
+            };
+            return colors[category] || 'bg-gray-500';
+        }
+
+        // Menu mobile
+        function setupMobileMenu() {
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const menu = document.querySelector('nav ul');
+            
+            if (toggle && menu) {
+                toggle.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                    menu.classList.toggle('block');
+                    menu.classList.toggle('absolute');
+                    menu.classList.toggle('bg-brand-primary');
+                    menu.classList.toggle('w-full');
+                    menu.classList.toggle('left-0');
+                    menu.classList.toggle('top-16');
+                    menu.classList.toggle('p-4');
+                    menu.classList.toggle('space-y-4');
+                });
+            }
+        }
+
+        // Newsletter
+        function setupNewsletter() {
+            const form = document.getElementById('newsletterForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = this.querySelector('input[type="email"]').value;
+                    alert(`Obrigado por assinar nossa newsletter! Um e-mail foi enviado para ${email}`);
+                    this.reset();
+                });
+            }
+        }
+
+        // Inicialização quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            loadFeaturedPosts();
+            loadLatestNews();
+            loadMostRead();
+            loadVideoHighlights();
+            loadNewsTicker();
+            setupMobileMenu();
+            setupNewsletter();
+        });
+    </script>
+</body>
+</html>
